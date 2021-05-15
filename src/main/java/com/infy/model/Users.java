@@ -1,5 +1,6 @@
 package com.infy.model;
 
+import com.infy.entity.UserEntity;
 
 public class Users {
 	private Integer userId;
@@ -46,5 +47,14 @@ public class Users {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public UserEntity convertIntoEntity() {
+		UserEntity userEntity=new UserEntity();
+		userEntity.setContactNumber(contactNumber);
+		userEntity.setEmailId(emailId);
+		userEntity.setPassword(password);
+		userEntity.setUserName(userName);
+		return userEntity;
 	}
 }

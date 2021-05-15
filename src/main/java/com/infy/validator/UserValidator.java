@@ -2,6 +2,16 @@ package com.infy.validator;
 
 public class UserValidator {
 
+	public static void validateUserForRegister(String contactNumber, String password,String email,String userName) throws Exception {
+
+		validateUserForLogin(contactNumber,password);
+		if (!validateUserName(userName))
+			throw new Exception("UserValidator.INVALID_USER_NAME");
+		
+		if(!validateEmail(email))
+			throw new Exception("UserValidator.INVALID_EMAIL");
+	}
+	
 	public static void validateUserForLogin(String contactNumber, String password) throws Exception {
 
 		if (!validateContactNumber(contactNumber))
@@ -33,4 +43,20 @@ public class UserValidator {
 		return flag;
 	}
 	
+	public static Boolean validateUserName(String userName) {
+		if(userName==null)return false;
+		Boolean flag=false;
+		if(userName.matches("[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]"))
+			if(userName.matches("[a-zA-Z].*"))
+				flag=true;
+		return flag;
+	}
+	
+	public static Boolean validateEmail(String email) {
+		if(email==null)return false;
+		Boolean flag=false;
+		if(email.matches("[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*"))
+			flag=true;
+		return flag;
+	}
 }

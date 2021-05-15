@@ -25,12 +25,7 @@ public class UserServiceImpl implements UserService {
 		UserEntity userEntity=usersRepository.findByContactNumber(contactNumber);
 		Users user=null;
 		if (userEntity!=null) {
-			user = new Users();
-			user.setUserId(userEntity.getUserId());
-			user.setEmailId(userEntity.getEmailId());
-			user.setContactNumber(userEntity.getContactNumber());
-			user.setUserName(userEntity.getUserName());
-			user.setPassword(userEntity.getPassword());
+			user = userEntity.convertIntoModel();
 		}
 		if (user == null)
 			throw new Exception("UserService.INVALID_CREDENTIALS");
@@ -47,6 +42,19 @@ public class UserServiceImpl implements UserService {
 		} else
 			throw new Exception("UserService.INVALID_CREDENTIALS");
 
+	}
+	
+	@Override
+	public Users registerUser(Users user) throws Exception {
+		UserValidator.validateUserForRegister(user.getContactNumber(), user.getPassword(), user.getEmailId(), user.getUserName());
+		if(usersRepository.findByContactNumber(user.getContactNumber())!=null)
+			throw new Exception("UserService.CONTACT_PRESENT");
+		user.setPassword(HashingUtility.setHashValue(user.getPassword()));
+		UserEntity userEntity=user.convertIntoEntity();
+		UserEntity userFromDB=usersRepository.save(userEntity);
+		user=userFromDB.convertIntoModel();
+		user.setPassword(null);
+		return user;
 	}
 
 }

@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.infy.model.Users;
+
 @Entity
 @Table(name = "USERS")
 public class UserEntity {
@@ -55,5 +57,15 @@ public class UserEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public Users convertIntoModel() {
+		Users user=new Users();
+		user.setUserId(userId);
+		user.setEmailId(emailId);
+		user.setContactNumber(contactNumber);
+		user.setUserName(userName);
+		user.setPassword(password);
+		return user;
 	}
 }

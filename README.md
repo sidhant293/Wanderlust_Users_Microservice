@@ -1,4 +1,4 @@
 # Wanderlust_ServerSide
 Contains backend of Wanderlust
-To run this you first need to run the table script in sql
+Only User MicroService
 The run it as a java application
